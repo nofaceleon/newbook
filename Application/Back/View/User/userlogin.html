@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用户登陆</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/home.css">
+	<script type="text/javascript" src="__PUBLIC__/Common/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Common/js/bootstrap.min.js"></script>
+	
+</head>
+<body>
+	<div class="regist_box">
+		<div class="regist_title2">用户登录</div>
+		<form method="post" action="">
+			<div class="user_box">
+				用户名
+				<input type="text" name="user_name" class="form-control" placeholder="您的用户名" id="user_name">
+				<span id="usernameinfo"></span>
+			</div>
+			<div class="pwd_box">
+				密码
+				<input type="password" name="user_pwd" class="form-control" placeholder="您的密码" id="password">
+				<span id="passwordinfo"></span>
+			</div>
+			<div class="captchar_box">
+				验证码
+				<input type="text" name="captchar" class="form-control" onkeyup="checkcode(this)" id="captchar">
+				<span id="code" data-url="{:U('checkcode')}"></span>
+			</div>
+			<div class="captchar_img">
+				<img src="{:U('showCaptchar')}"id="captchar2">
+			</div>
+			<div class="button">
+			<input type="submit" name="" value="登录" class="btn btn-info btn-block btn-large" id="login" onclick="return checkempty()">
+			<span class="text_box"><a href="">还没有账号?</a>
+			&nbsp;&nbsp;
+			<a href="{:U('Home/Index/index')}">返回首页</a>
+			
+			</span>
+			</div>
+		</form>
+	</div>
+<script>
+//	var oImg = document.getElementById('captchar2');
+//	oImg.onclick = function(){
+//		this.src = "{:U('showCaptchar')}"+Math.random();
+//	}
+
+	$('#captchar2').click(function (e) {
+        this.src=this.src+'?'+Math.random();
+        $('#captchar').val('');//当刷新验证码的时候清空输入框
+    })
+</script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/user_login.js"></script>
+
+
+
+</body>
+</html>

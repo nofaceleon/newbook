@@ -2,9 +2,10 @@ function checkcode(e)
 {
 	//先获取用户输入的验证码
 	var code=$(e).val();
+	var url=$('#code').data('url');
 	//将获取到的数据通过ajax传给php文件
 	$.ajax({
-		url:'?m=home&c=userregister&a=checkcode',
+		url:url,
 		data:{code:code},
 		dataType:'json',
 		type:'post',

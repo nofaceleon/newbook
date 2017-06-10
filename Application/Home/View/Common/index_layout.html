@@ -10,20 +10,22 @@
 </head>
 <body>
 	<div class="header_box">
-		<{if !isset($smarty.session.username)}>
+		<!--<{if !isset($smarty.session.username)}>-->
+		<if condition="null !== $Think.session.username">
 		<ul>
 			<li ><a href="?m=admin&c=login&a=indexAction" class="aheader">管理员登录</a></li>			
 			<li ><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
 			<li ><a href="?m=home&c=userregister&a=indexAction" class="aheader">注册</a></li>
-			<li ><a href="?m=home&c=userlogin&a=indexAction" class="aheader">用户登录</a></li>
+			<li ><a href="{:U('Back/User/userlogin')}" class="aheader">用户登录</a></li>
 			<li ><a href="?m=home&c=index&a=indexAction" class="aheader">首页</a></li>
 		</ul>
-		<{else}>
+		</if>
+		<!--<{else}>-->
 			<ul>
 				<li><a href="?m=home&c=index&a=cleansession" class="aheader">退出登陆</a></li>
-				<{if !in_array($smarty.session.username,$arr)}>
+				<!--<{if !in_array($smarty.session.username,$arr)}>-->
 				<li><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
-				<{/if}>
+				<!--<{/if}>-->
 <!-- 				<li><a href="?m=home&c=index&a=userbackAction" class="aheader"><{$smarty.session.username}></a></li> -->
 				<{if !in_array($smarty.session.username,$arr)}>
 				<li id="userbox" ><a href="javascript:void(0)" class="aheader"><{$smarty.session.username}></a>
