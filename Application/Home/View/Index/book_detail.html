@@ -1,0 +1,108 @@
+<{extends file="common/index_layout.html"}>
+<{block name="content"}>
+
+<div class="detail_box">
+	<div class="book_detail">
+		<div class="book_model1">
+			<span><h3><{$goods_detail['goods_name']}></h3></span>
+			<div class="book_model2">
+				<img src="<{THUMB_PATH}>book/<{$goods_detail['goods_img']}>">
+				<ul>
+					<li>作者：<{$goods_detail['author']}></li>
+					<li>出版社：<{$goods_detail['pub_company']}></li>
+					<li>出版年：<{$goods_detail['pub_date']}></li>
+					<li>定价：<{$goods_detail['goods_price']}>元</li>
+<!-- 					<li>库存：<{$goods_detail['goods_stock']}></li> -->
+					<li>分类：<{$goods_detail['cat_name']}></li>
+					<li>装帧：平装</li>
+				</ul>
+			</div>
+			<div class="book_model3">
+				<div class="book_model3_title"><h4>推荐指数</h4></div>
+				<div class="book_model3_score">
+					<{for $i=1;$i<=$goods_detail['is_recommend'];$i++}>
+					<i class="fa fa-star"></i>
+					<{/for}>
+				</div>
+			</div>
+			
+		</div>
+		<div class="buy">
+			<{if isset($smarty.session.username) && (in_array($smarty.session.username,$arr))}>
+				<a href="?m=admin&c=book&a=editAction&id=<{$goods_detail['goods_id']}>" class="btn btn-success">修改图书信息</a>
+			<{else}>
+			<a href="?m=home&c=index&a=addCartAction&id=<{$goods_detail['goods_id']}>&flag=1" class="btn btn-danger"  style="background-color:#FF5722;border-color:#FF5722;"><i class="fa fa-shopping-bag" style="color:white;"></i>&nbsp;&nbsp;加入购物车</a>
+			
+			<a href="?m=home&c=index&a=addCartAction&id=<{$goods_detail['goods_id']}>&flag=0" class="btn btn-primary" style="background-color:#03A9F4;border-color:#03A9F4"><i class="fa fa-shopping-basket" style="color:white;"></i> 立即购买</a>
+			<{/if}>
+
+		</div>
+		<div class="book_model4">
+			<div class="book_model4_title">内容简介.........</div>
+			<div class="book_model4_text"><p><{$goods_detail['goods_desc']}></p>
+			</div>
+		</div>
+		<div class="book_model4">
+			<div class="book_model4_title">用户评论.........(只显示最新的10条评论)</div>
+			
+			
+			
+			<{foreach $comment_list as $k=>$v}>
+				<div class="comment">
+					<span class="comment_user"><i class="fa fa-user fa-lg" style="color:#00BCD4"></i>&nbsp;&nbsp;<{$v['user_name']}> </span>&nbsp;&nbsp;&nbsp;
+					<span class="comment_time">评论时间：<{$v['comment_time']|date_format:"%Y-%m-%d %H:%M:%S"}></span>
+					<{if isset($smarty.session.username) && (in_array($smarty.session.username,$arr)||$smarty.session.username==$v['user_name'])}>
+					&nbsp;&nbsp;<span><a href="?m=home&c=usercomment&a=deletecomment&com_id=<{$v['comment_id']}>&id=<{$goods_detail['goods_id']}>" class="alink" onclick="return confirm('是否确认删除？')"><i class="fa fa-trash"></i> 删除评论</a></span>
+					<{/if}>
+					
+					<p><{$v['user_comment']}></p>
+				</div>
+			<{foreachelse}>
+				<div class="comment">
+					暂时没有评论！
+				</div>
+			<{/foreach}>
+			
+			
+			<div class="sendcomment">
+			<form action="?m=home&c=Usercomment&a=addhandelAction" method="post">
+				<table class="table-condensed">
+					<tr>
+						<td><textarea class="form-control" rows="8" cols="120" name="user_comment" id="comment"></textarea></td>
+					</tr>
+					<{if !isset($smarty.session.username)}>
+					<tr>
+						<td><a href="?m=home&c=userlogin&a=indexAction" class="btn btn-warning"><i class="fa fa-user-o" style="color:white;"></i>&nbsp;&nbsp;登陆</a>&nbsp;&nbsp;<font style="color:#9E9E9E;font-size:12px;">登陆之后才能发表评论！</font></td>
+						
+					</tr>
+					<{else}>
+					<tr>
+						<td><input type="submit" value="发表评论" class="btn btn-success" onclick="return isnull()"></td>
+						<input type="hidden" value="<{$smarty.session.username}>" name="user_name">
+						<input type="hidden" value="<{$goods_detail['goods_id']}>" name="goods_id">
+					</tr>
+					<{/if}>
+				
+				</table>
+				
+			</div>
+			</form>
+
+		</div>
+
+	</div>
+	</div>
+	
+	<script>
+		//检测评论内容是否为空
+		function isnull(){
+			var comment=$('#comment').val();//获取到了值
+			if(comment==''){
+				alert('评论不能为空！');
+				return false;
+			}else{
+				return true;
+			}		
+		}
+	</script>	
+	<{/block}>

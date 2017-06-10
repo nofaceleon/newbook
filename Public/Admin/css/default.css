@@ -1,0 +1,4 @@
+body,ul,ol,li,img,span,p,div{margin:0px;padding:0px;border:0px;}
+ ul,li,ol{list-style:none;}
+a:link,a:visited{text-decoration:none;color:#FFF;}
+a:hover{color:#FF9800;}

@@ -1,0 +1,59 @@
+<{extends file="common/index_layout.html"}>
+<{block name="content"}>
+<div style="text-align:center;color:#9E9E9E;">----总共有<{$book_num}>本书----</div>
+<div class="all_box">
+	<{foreach $all_book as $v}>
+		<div class="all_box_model1">
+			<div class="all_box_table">
+			<table class="table-condensed">
+				<tr>
+					<td rowspan="6"><a href="?m=home&c=index&a=showdetailAction&id=<{$v['goods_id']}>"><img src="<{THUMB_PATH}>book/<{$v['goods_img']}>"></a></td>
+					<td style="font-size:16px;"><a href="?m=home&c=index&a=showdetailAction&id=<{$v['goods_id']}>" class="alink"><b><{$v['goods_name']}></b></a></td>
+				</tr>
+				<tr>
+					<td>评分：
+						<{for $i=0;$i<$v['is_recommend'];$i++}>
+							<i class="fa fa-star"></i>
+						<{/for}>
+					
+					</td>
+				</tr>
+				<tr>
+					<td>作者：<{$v['author']}></td>
+				</tr>
+				<tr>
+					<td>价格：<{$v['goods_price']}> 元</td>
+				</tr>
+				<tr>
+					<td>出版社：<{$v['pub_company']}></td>
+				</tr>
+				
+				<tr>
+					<{if isset($smarty.session.username) && (in_array($smarty.session.username,$arr))}>
+					<td><a href="?m=admin&c=book&a=editAction&id=<{$v['goods_id']}>" class="btn btn-success btn-xs">修改图书信息</a></td>
+					<{else}>
+					<td><a href="?m=home&c=index&a=addCartAction&id=<{$v['goods_id']}>&flag=0" class="btn btn-success btn-xs">现在购买</a>&nbsp;<a href="?m=home&c=index&a=addCartAction&id=<{$v['goods_id']}>&flag=1" class="btn btn-danger btn-xs" style="background:#FF9800;">加入购物车</a></td>
+					<{/if}>
+				</tr>
+				
+			</table>
+			</div>
+		</div>
+		<{foreachelse}>
+		<div class="all_box_model1">
+			暂无此书信息
+		
+		</div>
+		
+		<{/foreach}>
+</div>
+<{if $pagenum>1}>
+<div class="page_bar_box"><{$page_bar}></div>
+<{/if}>
+
+
+
+
+
+
+<{/block}>

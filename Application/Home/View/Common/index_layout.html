@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一家书店</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Common/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/Common/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<div class="header_box">
+		<{if !isset($smarty.session.username)}>
+		<ul>
+			<li ><a href="?m=admin&c=login&a=indexAction" class="aheader">管理员登录</a></li>			
+			<li ><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
+			<li ><a href="?m=home&c=userregister&a=indexAction" class="aheader">注册</a></li>
+			<li ><a href="?m=home&c=userlogin&a=indexAction" class="aheader">用户登录</a></li>
+			<li ><a href="?m=home&c=index&a=indexAction" class="aheader">首页</a></li>
+		</ul>
+		<{else}>
+			<ul>
+				<li><a href="?m=home&c=index&a=cleansession" class="aheader">退出登陆</a></li>
+				<{if !in_array($smarty.session.username,$arr)}>
+				<li><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
+				<{/if}>
+<!-- 				<li><a href="?m=home&c=index&a=userbackAction" class="aheader"><{$smarty.session.username}></a></li> -->
+				<{if !in_array($smarty.session.username,$arr)}>
+				<li id="userbox" ><a href="javascript:void(0)" class="aheader"><{$smarty.session.username}></a>
+					<div id="caidan">
+						<ul>
+							<li><a href="?m=home&c=index&a=userbackAction" class="aheader">个人后台</a></li>
+							<li><a href="?m=home&c=index&a=showorder" class="aheader">我的订单</a></li>
+							<li><a href="?m=home&c=index&a=changePwdAction" class="aheader">修改密码</a></li>
+						</ul>
+					</div>
+				</li>
+				<{else}>
+					<li><a href="?m=home&c=index&a=userbackAction" class="aheader"><{$smarty.session.username}></a></li>
+				<{/if}>
+				<li><a href="#" class="aheader">欢迎您：</a></li>
+				<li><a href="?m=home&c=index&a=indexAction" class="aheader">首页</a></li>
+			</ul>
+		<{/if}>
+		
+	</div>
+	
+	<div class="title_box">
+		<div class="search_box">
+		<form method="post" action="?m=home&c=index&a=allbookAction">
+			<table>
+				<tr>
+					<td width="400"><input type="text" name="keyword" placeholder="输入书名或者作者名" class="form-control" value="<{$keyword}>"></td>
+					<td>&nbsp;<input type="submit" name="" value="搜索" class="btn btn-success " ></td>
+				</tr>
+			</table>
+		</form>
+		</div>
+	</div>
+	
+	
+	<block name="content"></block>
+	
+	
+	<div class="blank"></div>
+	<div class="footer_box">
+		毕业设计,一家书店
+		<a href="http://www.miitbeian.gov.cn/" target="_blank">皖ICP备17009549号</a>
+
+	</div>
+<script>
+// 百度统计代码 songphper
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?9a0376443885bdfcf4e99a923545a8f7";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+</script>
+	
+<script>
+//获取对象
+$('#userbox').mouseover(function(){
+	$('#caidan').show();
+});
+$('#userbox').mouseleave(function(){
+	$('#caidan').hide();
+});
+</script>
+	
+</body>
+</html>

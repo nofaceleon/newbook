@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人管理界面</title>
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>admin/css/admin.css">
+	
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>admin/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>common/font-awesome/css/font-awesome.min.css">
+	
+</head>
+<body>
+<div class="allback_box">
+	<!-- 框架头部 -->
+	<div class="header">
+		<ul class="header_ul">
+			<li class=""><a href="?m=home&c=index&a=cleansession">注销</a></li>
+			<li class=""><a href="?m=home&c=index&a=showcart">购物车</a></li>		
+			<li class=""><a href="?m=home&c=index&a=userbackindex"><{$smarty.session.username}></a></li>
+			<li class="">欢迎您：</li>
+			<li class=""><a href="?m=home&c=index&a=indexAction">首页</a></li>	
+		</ul>
+	</div>
+	<!-- 框架头部end -->
+
+	<!-- 框架左边 -->
+	<div class="left_box">
+		<ul class="left_ul">
+			<li><h3>个人设置</h3></li>
+			<li><a href="?m=home&c=index&a=userinfoAction">信息修改</a></li>
+<!-- 			<li><a href="#">收货地址</a></li> -->
+			<li><a href="?m=home&c=index&a=changePwdAction">密码修改</a></li>
+			<li>______________________</li>
+
+			<li><h3>订单中心</h3></li>
+			<li><a href="?m=home&c=index&a=showorder">我的订单</a></li>
+<!-- 			<li><a href="#">我的评论</a></li> -->
+			
+		</ul>
+
+	</div> 
+	<!-- 框架左边end  --> 
+	
+	
+	<{block name="content"}>
+	<{/block}>
+	
+	
+	
+	
+	<!-- 框架底部 -->
+	<div class="footer">
+
+
+		<div class="footer_text">
+		版权所有
+		<a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:blue">皖ICP备17009549号</a>
+		</div>
+
+	</div>
+	<!-- 框架底部end -->
+	</div>
+
+	
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一家书店</title>
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>admin/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>common/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="<{PUBLIC_PATH}>home/css/index.css">
+	<script type="text/javascript" src="<{PUBLIC_PATH}>common/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<div class="header_box">
+		<{if !isset($smarty.session.username)}>
+		<ul>
+			<li><a href="?m=admin&c=login&a=indexAction" class="aheader">管理员登陆</a></li>
+			<li><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
+			<li><a href="?m=home&c=userregister&a=indexAction" class="aheader">注册</a></li>
+			<li><a href="?m=home&c=userlogin&a=indexAction" class="aheader">用户登陆</a></li>
+			<li><a href="?m=home&c=index&a=indexAction" class="aheader">首页</a></li>
+		</ul>
+		<{else}>
+			<ul>
+				<li><a href="?m=home&c=index&a=cleansession" class="aheader">退出登陆</a></li>
+				<{if !in_array($smarty.session.username,$arr)}>
+				<li><a href="?m=home&c=index&a=showCart" class="aheader">购物车</a></li>
+				<{/if}>
+<!-- 				<li><a href="?m=home&c=index&a=userbackAction" class="aheader"><{$smarty.session.username}></a></li> -->
+				<li id="userbox"><a href="javascript:void(0)" class="aheader"><{$smarty.session.username}></a>
+					<div id="caidan">
+						<ul>
+							<li><a href="?m=home&c=index&a=userbackAction" class="aheader">个人后台</a></li>
+							<li><a href="?m=home&c=index&a=showorder" class="aheader">我的订单</a></li>
+							<li><a href="?m=home&c=index&a=changePwdAction" class="aheader">修改密码</a></li>
+						</ul>
+					</div>
+				</li>
+				<li><a href="#" class="aheader">欢迎您：</a></li>
+				<li><a href="?m=home&c=index&a=indexAction" class="aheader">首页</a></li>
+			</ul>
+		<{/if}>
+		
+	</div>
+	
+	<div class="title_box"></div>
+
+	<body>
+		<div class="cart_box">
+			<div class="cart_box_left">
+				<ul class="order_ul">
+					<li><b>收货人：</b> <{$user_info['user_true_name']}></li>					
+					<li><b>联系电话：</b> <{$user_info['user_tel']|default:'未设置'}></li>
+					<li><b>支付方式：</b> 货到付款</li>
+					<li><b>账户状态：</b>
+						<{if $user_info['active']==0}>
+						未激活，请完善个人信息
+						<{elseif $user_info['active']==1}>
+						已激活
+						<{/if}>
+					</li>
+					<li><b>收货地址：</b></li>
+					<li><p><{$user_info['user_address']|default:'未设置'}></p></li>
+					<li><a href="?m=home&c=index&a=userinfoAction" class="btn btn-warning"><i class="fa fa-cog" style="color:white"></i> 修改信息</a></li>
+		
+				</ul>
+			</div>
+		
+			<div class="cart_box_right">
+				<div class="cart_box_right_title"><b>购物车</b></div>
+				<form action="?m=home&c=index&a=addorder" method="post" onsubmit="return check()">
+
+					<table class="table table-condensed table-hover">
+						
+						<tr>
+<!-- 							<td><input type="checkbox" name="" width="50" id="allchecked"> <b>全选/不选</b></td> -->
+							<td><b>作品</b></td>
+							<td><b>价格</b></td>
+							<td width="60"><b>数量</b></td>
+							<td width="60"><b>操作</b></td>
+						</tr>
+						
+					<{if !isset($SESSION['book'])}>
+							<tr>
+								<td colspan="4">购物车中暂时没有商品</td>
+							</tr>
+						
+					<{else}>
+
+						<{foreach $SESSION['book'] as $k=>$v}>
+						<tr id="<{$k}>">
+<!-- 							<td><input type="checkbox" name="price" value="6.23"></td> -->
+							<td><{$v['goods_name']}>&nbsp;&nbsp;
+								<font color="#9E9E9E"><{$v['author']}></font>
+								<input type="hidden" value="<{$v['goods_name']}>" name="info[<{$k}>][goods_name]">
+								<input type="hidden" value="<{$smarty.session.book.$k.goods_id}>" name="info[<{$k}>][goods_id]">
+							</td>
+							<td name="price"><{$v['goods_price']}>元
+								<input type="hidden" value="<{$v['goods_price']}>" name="info[<{$k}>][goods_price]">
+							
+							</td>
+							<td><input type="text" name="info[<{$k}>][goods_num]" id="number" value="1" class="form-control number" onkeyup="sum()" />
+								
+							</td>
+
+							<td>
+								<a href="?m=home&c=index&a=delesession&ses_id=<{$k}>" class="btn btn-danger" name="delete" onclick="return confirm('是否确认删除？')"><i class="fa fa-trash" style="color:white"></i></a>
+							</td>
+						</tr>
+						<{foreachelse}>
+							<tr>
+								<td colspan="4">购物车暂时没有商品</td>
+							</tr>
+						<{/foreach}>
+					<{/if}>
+						
+					</table>
+					<{if empty($SESSION['book'])}>
+						<div class="total_box">
+						</div>
+					<{else}>
+					<div class="total_box">
+						<b>合计 <i class="fa fa-rmb" style="color:black"></i> <span id="total_price"></span>元 </b> &nbsp;&nbsp;&nbsp;
+						<input type="hidden" value="" id="hidden" name="zongjia"/>
+						<input type="submit" name="" id="" value="结算" class="btn btn-primary" onclick="return confirm('是否确认购买？')"/><br>
+						<span style="color:#9E9E9E;font-size:14px;">*结算前请确保收货地址正确</span>
+					</div>
+					<{/if}>
+
+			</div>
+			</form>
+		</div>
+		<div class="cart_footer"></div>
+
+		<script type="text/javascript">
+			
+			//var total_price=0;//商品总价
+			//获取各个商品的数量
+// 			var numobj=document.getElementsByName('goods_num');
+			var numobj=document.getElementsByClassName('number');
+			var price_obj=document.getElementsByName('price');
+			
+			function total(){
+				var total_price=0;
+				for(var i=0;i<price_obj.length;i++){
+				total_price += parseFloat(price_obj[i].innerText)*100*numobj[i].value;//转换成百分制,防止精度丢失
+				//console.log(price_obj[i].value);
+				}
+				var spanobj= document.getElementById('total_price');
+				total_price=(total_price/100).toFixed(2);
+				spanobj.innerText=total_price;
+				
+				
+				var price=document.getElementById('total_price').innerText;
+				document.getElementById('hidden').value=price;
+			}
+				
+			total();
+					
+			//console.log(price_obj);
+			function sum(){
+				total();
+				
+			}
+			
+			
+			function check(){
+				//当提交的时候验证总价是否小于等于0,或者是否为数字
+				var zongjia=document.getElementById('total_price');
+				if(isNaN(zongjia.innerText)){
+					alert('请输入正确的数量');
+					return false;
+				}else if(zongjia.innerText<=0){
+					alert('请输入正确的数量');
+					return false;
+				}else{
+					return true;
+				}
+			}
+// 			//监视所有的删除按钮
+// 			function deletebook(id){	
+// 				//var row=obj.parentNode;
+// 				var row=document.getElementById(id);
+// //				console.log(row);
+// 				row.parentNode.removeChild(row);
+// 				Session["book"][id]='';
+// 				total();
+// 					//console.log(row.parentNode);
+	
+// 			}
+	
+		</script>
+<script>
+//获取对象
+$('#userbox').mouseover(function(){
+	$('#caidan').show();
+});
+$('#userbox').mouseleave(function(){
+	$('#caidan').hide();
+});
+</script>
+</body>

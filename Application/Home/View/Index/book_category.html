@@ -1,0 +1,42 @@
+<{extends file="common/index_layout.html"}>
+<{block name="content"}>
+<div style="text-align:center;color:#9E9E9E;">----总共有<{$book_num}>本书----</div>
+<div class="all_box">
+		<div class="category_box">
+			<span class="category_text">壹家書店分類：<{$cat_name}></span>
+		</div>
+		<{foreach $category_book as $v}>
+		<div class="all_box_model1">
+			<div class="all_box_table">
+				<div class="pic">
+					<a href="?m=home&c=index&a=showdetailAction&id=<{$v['goods_id']}>"><img src="<{THUMB_PATH}>book/<{$v['goods_img']}>"></a>
+				</div>
+				<div class="all_box_text">
+					<ul>
+						<li><a href="?m=home&c=index&a=showdetailAction&id=<{$v['goods_id']}>" class="alink"><{$v['goods_name']}></a></li>
+						<li style="color:#9E9E9E"><{$v['author']}> / <{$v['pub_company']}> / <{$v['cat_name']}> / <{$v['pub_date']}> / <{$v['goods_price']}>元</li>
+						<li>
+							<{for $i=1;$i<=$v['is_recommend'];$i++}>
+							<i class="fa fa-star"></i>
+							<{/for}>
+						
+						</li>
+						<li><p><{$v['goods_desc']}></p></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<{foreachelse}>
+		<div class="all_box_model1">
+			该分类下暂时没有图书
+		
+		</div>
+		<{/foreach}>
+		
+<!-- 		分页按钮 -->
+	<{if $pagenum>1}>
+		<div class="page_bar_box"><{$page_bar}></div>
+	<{/if}>
+	</div>
+
+<{/block}>

@@ -1,0 +1,98 @@
+<extend name="Common/index_layout" />
+<block name="content">
+	</div>
+	<div class="all_box2">
+	<div class="left_box">
+		<div class="left_new_book">
+			<div class="left_text"><i class="fa fa-book" style="color:#4CAF50"></i>&nbsp;新书速递&nbsp;<a href="?m=home&c=index&a=allbookAction" class="amore">更多>>></a></div>
+
+			<div class="allbook_box">
+
+				<volist name="book_list" id="v">
+			<div class="book_box">
+				<a href="#" title="{$v['goods_desc']}"><img src="#" width="100" height="145"></a>
+				<ul>
+					<li><a href="#" class="alink">{$v['goods_name']}</a></li>
+					<li>{$v['author']}</li>
+				</ul>
+			</div>
+				</volist>
+						
+			</div>
+
+	<div class="left_text"><i class="fa fa-heart" style="color:red"></i>&nbsp;可能喜欢&nbsp;<a href="?m=home&c=index&a=indexAction" class="amore">换一换>>></a></div>
+		<div class="allbook_box2">
+
+			<volist name="focus_list" id="v1">
+
+			<div class="book_box2">
+				<a href="#" title="{$v1['goods_name']}"><img src="#" width="100" height="145"></a>
+				<ul>
+					<li><a href="#" class="atitle">{$v1['goods_name']}</a></li>
+					<li>
+
+						<for start="1" end="$v1['is_recommend']" comparison="elt">
+
+							<i class="fa fa-star"></i>
+						</for>
+
+					</li>
+					<li>作者:{$v1['author']}</li>
+					<li>分类:{$v1['cat_name']}</li>
+					<div class="desc_box">简介:{$v1['goods_desc']}</div>
+				</ul>
+			</div>
+
+			</volist>
+			</div>
+		</div>
+
+	</div>
+
+
+<!-- 中间右边容器 -->
+	<div class="right_box">
+		<div class="left_text"><i class="fa fa-tags"></i>&nbsp;图书分类&nbsp;<a href="" class="amore">所有分类>>></a></div>
+		<div class="right_aside">
+			<ul>
+
+				<volist name="category_list" id="v">
+				<li><a href="?m=home&c=index&a=bookcategoryAction&cat_name=<{$v['cat_name']}>">{$v['cat_name']}</a></li>
+				</volist>
+
+			</ul>
+		</div>
+		<div class="left_text"><i class="fa fa-bank" style="color:#03A9F4"></i>&nbsp;畅销图书榜 TOP10&nbsp;<a href="" class="amore">更多>>></a></div>
+		<div class="book_list">
+			<table class="table table-hover table-condensed table-striped">
+			<!-- 模块 -->
+
+				<volist name="hot_list" id="v" key="k">
+				<tr>
+					<td>{$k}.<a href="?m=home&c=index&a=showdetailAction&id=<{$v['goods_id']}>" class="alink">{$v['goods_name']}</a></td>
+					<td>销量：{$v['goods_sales']}</td>
+					
+				</tr>
+				<tr>
+					<td style="font-size: 12px;">{$v['author']}</td>
+					<!--<{if isset($smarty.session.username) && (in_array($smarty.session.username,$arr))}>-->
+
+						<td><a href="?m=admin&c=book&a=editAction&id=<{$v['goods_id']}>" class="buylink">修改信息</a></td>
+					<!--<{else}>-->
+					<td><a href="?m=home&c=index&a=addCartAction&id=<{$v['goods_id']}>&flag=0" class="buylink">去购买</a></td>	
+					<!--<{/if}>-->
+				</tr>
+
+				</volist>
+				 <!-- 分割线 -->				
+			</table>
+		</div>
+
+
+
+	</div>
+
+<!-- 中间右边容器END -->
+</div>
+
+</block>
