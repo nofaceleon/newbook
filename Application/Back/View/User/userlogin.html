@@ -27,19 +27,24 @@
 				验证码
 				<input type="text" name="captchar" class="form-control" onkeyup="checkcode(this)" id="captchar">
 				<span id="code" data-url="{:U('checkcode')}"></span>
+				<!--<span id="code" data-url="{:U('userlogin')}"></span>-->
 			</div>
 			<div class="captchar_img">
 				<img src="{:U('showCaptchar')}"id="captchar2">
 			</div>
 			<div class="button">
 			<input type="submit" name="" value="登录" class="btn btn-info btn-block btn-large" id="login" onclick="return checkempty()">
-			<span class="text_box"><a href="">还没有账号?</a>
+			<span class="text_box"><a href="{:U('register')}">还没有账号?</a>
 			&nbsp;&nbsp;
 			<a href="{:U('Home/Index/index')}">返回首页</a>
 			
 			</span>
 			</div>
 		</form>
+
+
+			<!--<div class="alert alert-danger">错误！请进行一些更改。</div>-->
+
 	</div>
 <script>
 //	var oImg = document.getElementById('captchar2');

@@ -1,17 +1,18 @@
 function checkuser(e){
 		//获取用户填写的用户名
 		var username=$(e).val();//已经成功获取到用户提交的用户名
+		var url=$('#user_name').data('url');
 		//alert(username);
 	 $.ajax({
 		 	
-			url:'?m=home&c=userregister&a=checkunique',
+			url:url,
 			data:{username:username},
 			dataType:'json',
-			type:'post',
+			type:'get',
 			success:function(res){
 				if(res.flag){
 					//用户没有被注册
-					//$('#info').css('color','green');
+					$('#usernameinfo').css('color','green');
 					$('#usernameinfo').html(res.mes);
 				}else{ 
 					//用户已经被注册
@@ -26,9 +27,10 @@ function checkuser(e){
 	{
 		//先获取用户输入的验证码
 		var code=$(e).val();
+		var url=$('#code').data('url');
 		//将获取到的数据通过ajax传给php文件
 		$.ajax({
-			url:'?m=home&c=userregister&a=checkcode',
+			url:url,
 			data:{code:code},
 			dataType:'json',
 			type:'post',

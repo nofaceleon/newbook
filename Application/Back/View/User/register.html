@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新用户注册</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/home.css">
+	<script type="text/javascript" src="__PUBLIC__/Common/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<div class="regist_box">
+		<div class="regist_title">新用户注册</div>
+		<form method="post" action="?m=home&c=userregister&a=checkData">
+			<div class="user_box">
+				用户名
+				<input type="text" name="user_name" class="form-control" placeholder="字母，数字，下划线的组合" onblur="checkuser(this)" id="user_name" data-url="{:U('checkname')}">
+				<span id="usernameinfo" style="position: relative;"></span>
+			</div>
+			<div class="pwd_box">
+				密码
+				<input type="password" name="user_pwd" class="form-control" placeholder="6~20个字符" id="password">
+				<span id="passwordinfo"></span>
+			</div>
+			<div class="captchar_box">
+				验证码
+				<input type="text" name="captchar" class="form-control" onkeyup="checkcode(this)" id="captchar">
+				<span id="code" data-url="{:U('checkcode')}"></span>
+			</div>
+			<div class="captchar_img">
+				<img src="{:U('showcaptchar')}" onclick="" id="captchar2">
+			</div>
+			<div class="button">
+			<input type="submit" name="" value="注册" class="btn btn-success btn-block btn-large" onclick="return checkempty()">
+			<span class="text_box"><a href="{:U('userlogin')}">已有账号？</a>
+			&nbsp;&nbsp;
+			<a href="{:U('Home/Index/index')}">返回首页</a></span>
+			</div>
+		</form>
+
+	</div>
+<script>
+	$('#captchar2').click(function (e) {
+		this.src=this.src+'?'+Math.random();
+		$('#captchar').val('');
+    })
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/user_register.js"></script>
+	
+</body>
+</html>

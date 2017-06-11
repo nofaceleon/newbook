@@ -24,22 +24,28 @@
 			<div class="captchar_text_box">
 			<label>验证码:</label>
 			<input type="text" name="captchar" class="form-control" onkeyup="checkcode(this)" id="captchar">
-			<span id="code"></span></div>
+			<span id="code" data-url="{:U('checkcode')}"></span></div>
 			&nbsp;
-			<div class="captchar_box"><img src="?m=admin&c=Login&a=showCaptchar" id="captchar2"></div>
+			<div class="captchar_box"><img src="{:U('showCaptchar')}" id="captchar2"></div>
 			<div class="button">
 			<input type="submit" name="" value="登录" class="btn btn-success btn-block btn-large" onclick="return checkempty()">
-			<span><a href="?m=home&c=index&a=indexAction">返回首页</a></span>
+			<span><a href="{:U('Home/Index/index')}">返回首页</a></span>
 			</div>
 
 		</form>
 
 	</div>
+
+<if condition="$Think.session.error neq ''">
+	<script>alert("{$Think.session.error}")</script>
+</if>
+
 <script>
-	var oImg = document.getElementById('captchar2');
-	oImg.onclick = function(){
-		this.src = '?m=admin&c=login&a=showCaptchar&'+Math.random();
-	}
+	$('#captchar2').click(function (e) {
+		this.src=this.src+'?'+Math.random();
+		$('#captchar').val('');
+    })
+
 </script>
 <script type="text/javascript" src="__PUBLIC__/Admin/js/admin_login.js"></script>
 
